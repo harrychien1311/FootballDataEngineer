@@ -12,7 +12,7 @@ from pipelines.wikipedia_pipeline import extract_wikipedia_data, transform_wikip
 dag = DAG(
     dag_id='wikipedia_flow',
     default_args={
-        "owner": "Yusuf Ganiyu",
+        "owner": "Chien Nguyen Nhu",
         "start_date": datetime(2023, 10, 1),
     },
     schedule_interval=None,
@@ -30,7 +30,7 @@ extract_data_from_wikipedia = PythonOperator(
 transform_wikipedia_data = PythonOperator(
     task_id='transform_wikipedia_data',
     provide_context=True,
-    python_callable=transform_wikipedia_data,
+    python_callable=transform_wikipedia_data,  
     dag=dag
 )
 

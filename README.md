@@ -1,6 +1,6 @@
 # Football Data Engineering
 
-This Python-based project crawls data from Wikipedia using Apache Airflow, cleans it and pushes it Azure Data Lake for processing.
+This Python-based project crawls football related data from various sources in internet using Apache Airflow, cleans it and pushes it a data warehouse for processing.
 
 ## Table of Contents
 
@@ -9,25 +9,18 @@ This Python-based project crawls data from Wikipedia using Apache Airflow, clean
 3. [Getting Started](#getting-started)
 4. [Running the Code With Docker](#running-the-code-with-docker)
 5. [How It Works](#how-it-works)
-6. [Video](#video)
 
 ## System Architecture
 ![system_architecture.png](assets%2Fsystem_architecture.png)
 
 ## Requirements
-- Python 3.9 (minimum)
+- Python 3.11 (minimum)
 - Docker
 - PostgreSQL
 - Apache Airflow 2.6 (minimum)
 
 ## Getting Started
 
-1. Clone the repository.
-   ```bash
-   git clone https://github.com/airscholar/FootballDataEngineering.git
-   ```
-
-2. Install Python dependencies.
    ```bash
    pip install -r requirements.txt
    ```
@@ -44,7 +37,4 @@ This Python-based project crawls data from Wikipedia using Apache Airflow, clean
 1. Fetches data from Wikipedia.
 2. Cleans the data.
 3. Transforms the data.
-4. Pushes the data to Azure Data Lake.
-
-## Video
-[![FootballDataEngineering](https://img.youtube.com/vi/tKIXUqz17W8/0.jpg)](https://www.youtube.com/watch?v=tKIXUqz17W8)
+4. Pushes the data to Postgre Datawarehouse.

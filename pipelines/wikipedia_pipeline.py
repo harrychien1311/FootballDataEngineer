@@ -24,7 +24,8 @@ def get_wikipedia_data(html):
     from bs4 import BeautifulSoup
 
     soup = BeautifulSoup(html, 'html.parser')
-    table = soup.find_all("table", {"class": "wikitable sortable"})[0]
+    # table = soup.find_all("table", {"class": "wikitable sortable"})
+    table = soup.find_all("table", {'class': 'wikitable sortable sticky-header'})[0]
 
     table_rows = table.find_all('tr')
 
@@ -72,7 +73,8 @@ def extract_wikipedia_data(**kwargs):
 
 
 def get_lat_long(country, city):
-    geolocator = Nominatim(user_agent='geoapiExercises')
+    # geolocator = Nominatim(user_agent='geoapiExercises')
+    geolocator = Nominatim(user_agent='chiennn.pasal@gmail.com')
     location = geolocator.geocode(f'{city}, {country}')
 
     if location:
@@ -104,16 +106,13 @@ def transform_wikipedia_data(**kwargs):
 
 def write_wikipedia_data(**kwargs):
     from datetime import datetime
+    from sqlalchemy import create_engine
+    import psycopg2
+
     data = kwargs['ti'].xcom_pull(key='rows', task_ids='transform_wikipedia_data')
 
     data = json.loads(data)
     data = pd.DataFrame(data)
 
-    file_name = ('stadium_cleaned_' + str(datetime.now().date())
-                 + "_" + str(datetime.now().time()).replace(":", "_") + '.csv')
-
-    # data.to_csv('data/' + file_name, index=False)
-    data.to_csv('abfs://footballdataeng@footballdataeng.dfs.core.windows.net/data/' + file_name,
-                storage_options={
-                    'account_key': 'pcrbWAsuPmzOH43lu1xang05pIs+g1Lys/bor0z59O38sVyWQNQ64AtEveMobZ2pIwCjqximReKY+ASt9dP/+A=='
-                }, index=False)
+    engine = create_engine(f'postgresql+psycopg2://postgres:postgres@172.21.69.190:54320/postgres')
+    data.to_sql('stadiums', engine, if_exists='append', index=False)
